@@ -1,0 +1,36 @@
+import unittest
+from collections import Counter
+from transformation_petitions import get_words 
+
+class TestPetitionTransformation(unittest.TestCase):
+
+    # Test word extraction from text (filtering words with at least 5 letters)
+    def test_get_words(self):
+        text = "Government reforms are necessary for economy growth."
+        result = get_words(text)
+
+        # Expected words (all should be at least 5 letters)
+        expected_words = ["government", "reforms", "necessary", "economy", "growth"]
+
+        self.assertEqual(result, expected_words)
+        self.assertNotIn("are", result)
+
+    # Test word frequency count using Counter
+    def test_word_counting(self):
+        words = ["government", "reforms", "economy", "economy", "growth", "growth", "growth"]
+        word_counter = Counter(words)
+
+        self.assertEqual(word_counter["government"], 1)
+        self.assertEqual(word_counter["economy"], 2)
+        self.assertEqual(word_counter["growth"], 3)
+        self.assertEqual(word_counter.get("policy", 0), 0)  # this is to return 0 for words not in the list
+
+    # Test edge cases: empty input, short words only, and special characters
+    def test_edge_cases(self):
+        self.assertEqual(get_words(""), [])  # Empty text should return an empty list
+        self.assertEqual(get_words("The UK is a great place!"), ["great", "place"])  # Only long words
+        self.assertEqual(get_words("123 4567 !@#$%^&*() government."), ["government"])  # Ignore numbers and special chars
+
+
+if __name__ == "__main__":
+    unittest.main()
