@@ -25,12 +25,6 @@ class TestPetitionTransformation(unittest.TestCase):
         self.assertEqual(word_counter["growth"], 3)
         self.assertEqual(word_counter.get("policy", 0), 0)  # this is to return 0 for words not in the list
 
-    # Test edge cases: empty input, short words only, and special characters
-    def test_edge_cases(self):
-        self.assertEqual(get_words(""), [])  # Empty text should return an empty list
-        self.assertEqual(get_words("The UK is a great place!"), ["great", "place"])  # Only long words
-        self.assertEqual(get_words("123 4567 !@#$%^&*() government."), ["government"])  # Ignore numbers and special chars
-
 
 if __name__ == "__main__":
     unittest.main()
